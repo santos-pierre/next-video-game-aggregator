@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { GetStaticPropsResult } from 'next';
 import Layout from '../components/Layout';
+import PopularGames from '../components/PopularGames';
 import { Game } from '../interfaces';
 
 type IndexPageProps = {
@@ -10,8 +11,12 @@ type IndexPageProps = {
     anticipatedGames: Game[];
 };
 
-const IndexPage: React.FC<IndexPageProps> = ({}) => {
-    return <Layout></Layout>;
+const IndexPage: React.FC<IndexPageProps> = ({ popularGames }) => {
+    return (
+        <Layout>
+            <PopularGames games={popularGames} />
+        </Layout>
+    );
 };
 
 export const getStaticProps = async (): Promise<GetStaticPropsResult<any>> => {

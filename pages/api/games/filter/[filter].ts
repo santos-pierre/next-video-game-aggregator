@@ -12,19 +12,19 @@ export default async ({ query }: NextApiRequest, res: NextApiResponse) => {
         switch (filter) {
             case 'coming_soon':
                 unformattedGames = await getGames('coming_soon');
-                res.status(200).json(formatToView(unformattedGames));
+                res.status(200).json(formatToView(unformattedGames, 'thumb'));
                 break;
             case 'reviewed':
                 unformattedGames = await getGames('reviewed');
-                res.status(200).json(formatToView(unformattedGames));
+                res.status(200).json(formatToView(unformattedGames, 'big'));
                 break;
             case 'popular':
                 unformattedGames = await getGames('popular');
-                res.status(200).json(formatToView(unformattedGames));
+                res.status(200).json(formatToView(unformattedGames, 'big'));
                 break;
             case 'anticipated':
                 unformattedGames = await getGames('anticipated');
-                res.status(200).json(formatToView(unformattedGames));
+                res.status(200).json(formatToView(unformattedGames, 'thumb'));
                 break;
             default:
                 res.status(200).json([]);
@@ -35,15 +35,19 @@ export default async ({ query }: NextApiRequest, res: NextApiResponse) => {
     }
 };
 
-const formatToView = (unformattedGames: Game[]) => {
+const formatToView = (unformattedGames: Game[], imgSize: 'big' | 'thumb') => {
     return collect(unformattedGames).map((game) => {
         return collect(game).merge({
             first_release_date: game.first_release_date
                 ? dayjs.unix(game.first_release_date).format('d MMM, YYYY')
                 : 'N/A',
             platforms: game.platforms ? collect(game.platforms).pluck('abbreviation').implode(', ') : 'N/A',
-            rating: game.rating ? Math.round(game.rating) : null,
-            cover: game.cover.url ? game.cover.url : '/public/img/cover_big.png',
+            rating: game.rating ? Math.round(game.rating) / 100 : null,
+            cover: game.cover.url
+                ? imgSize === 'big'
+                    ? game.cover.url.replace('thumb', 'cover_big')
+                    : game.cover.url
+                : '/img/cover_big.png',
         });
     });
 };
