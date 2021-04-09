@@ -1,18 +1,42 @@
 import axios from 'axios';
-import Link from 'next/link';
+import { GetStaticPropsResult } from 'next';
 import Layout from '../components/Layout';
+import { Game } from '../interfaces';
 
-const IndexPage = () => {
-    const testApi = async () => {
-        try {
-            const response = await axios.get('api/games/coming');
-            console.log(response.data);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+type IndexPageProps = {
+    popularGames: Game[];
+    reviewedGames: Game[];
+    comingSoonGames: Game[];
+    anticipatedGames: Game[];
+};
 
+const IndexPage: React.FC<IndexPageProps> = ({}) => {
     return <Layout></Layout>;
+};
+
+export const getStaticProps = async (): Promise<GetStaticPropsResult<any>> => {
+    let popularGames = [];
+    let reviewedGames = [];
+    let comingSoonGames = [];
+    let anticipatedGames = [];
+
+    try {
+        popularGames = (await axios.get('http://localhost:3000/api/games/filter/popular')).data;
+        reviewedGames = (await axios.get('http://localhost:3000/api/games/filter/reviewed')).data;
+        comingSoonGames = (await axios.get('http://localhost:3000/api/games/filter/coming_soon')).data;
+        anticipatedGames = (await axios.get('http://localhost:3000/api/games/filter/anticipated')).data;
+    } catch (error) {
+        console.log(error);
+    }
+
+    return {
+        props: {
+            popularGames,
+            reviewedGames,
+            comingSoonGames,
+            anticipatedGames,
+        },
+    };
 };
 
 export default IndexPage;
