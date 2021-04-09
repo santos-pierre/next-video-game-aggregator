@@ -1,8 +1,11 @@
 import axios from 'axios';
 import { GetStaticPropsResult } from 'next';
+import AnticipatedGames from '../components/AnticipatedGames';
+import ComingSoonGames from '../components/ComingSoonGames';
 import Layout from '../components/Layout';
 import PopularGames from '../components/PopularGames';
 import ReviewedGames from '../components/ReviewedGames';
+import SideSectionGames from '../components/SideSectionGames';
 import { Game } from '../interfaces';
 
 type IndexPageProps = {
@@ -12,13 +15,24 @@ type IndexPageProps = {
     anticipatedGames: Game[];
 };
 
-const IndexPage: React.FC<IndexPageProps> = ({ popularGames, reviewedGames }) => {
+const IndexPage: React.FC<IndexPageProps> = ({
+    popularGames,
+    reviewedGames,
+    anticipatedGames,
+    comingSoonGames,
+}) => {
     return (
         <Layout>
             <PopularGames games={popularGames} />
             <div className="flex lg:flex-row flex-col my-10">
-                <div className="lg:w-3/4 w-full lg:mr-32 mr-0">
-                    <ReviewedGames games={reviewedGames} />
+                <ReviewedGames games={reviewedGames} />
+                <div className="lg:w-1/4 w-full lg:mt-0 mt-12">
+                    <SideSectionGames
+                        games={anticipatedGames}
+                        category="anticipated"
+                        title="Most Anticipated"
+                    />
+                    <SideSectionGames games={comingSoonGames} category="coming" title="Coming Soon" />
                 </div>
             </div>
         </Layout>
