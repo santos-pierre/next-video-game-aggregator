@@ -22,18 +22,8 @@ const GameCardBig: React.FC<GameCardBigProps> = ({ game }) => {
                                 slug={game.slug}
                                 category="popular"
                                 rating={game.rating}
-                                style="absolute bottom-0 -right-5 -bottom-5"
+                                style="absolute -right-5 -bottom-5"
                             />
-                            // <div
-                            //     className="absolute bottom-0 right-0 w-16 h-16 bg-gray-800 rounded-full"
-                            //     style={{ right: '-15px', bottom: '-15px' }}
-                            // >
-                            //     <div
-                            //         id={game.slug}
-                            //         className="font-semibold text-sm flex justify-center items-center h-full"
-                            //         ref={ratingProgress}
-                            //     ></div>
-                            // </div>
                         )}
                     </a>
                 </Link>
