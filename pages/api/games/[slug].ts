@@ -6,7 +6,7 @@ import collect from 'collect.js';
 export default async ({ query }: NextApiRequest, res: NextApiResponse) => {
     let { slug } = query;
 
-    const unformattedGame = await getGame(slug as string);
+    const unformattedGame: DetailedGame = await getGame(slug as string);
 
     if (unformattedGame === undefined) {
         return res.status(404).json('Not Found');
@@ -34,7 +34,7 @@ const formatToView = (game: DetailedGame) => {
                       };
                   })
                   .take(9)
-            : null,
+            : [],
         trailer: collect(game.videos).isNotEmpty()
             ? `https://youtube.com/embed/${game.videos[0].video_id}`
             : null,
@@ -47,7 +47,7 @@ const formatToView = (game: DetailedGame) => {
                               ? collect(similar_game.platforms).pluck('name').implode(', ')
                               : 'N/A',
                           rating: similar_game.rating ? Math.round(similar_game.rating) / 100 : null,
-                          cover: similar_game.cover.url
+                          cover: similar_game.cover
                               ? similar_game.cover.url.replace('thumb', 'cover_big')
                               : '/img/cover_big.png',
                           slug: similar_game.slug,

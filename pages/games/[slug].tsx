@@ -118,7 +118,7 @@ const ShowGame: React.FC<ShowGameProps> = ({ game }) => {
                                         >
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
-                                                className="h-5 w-5 fill-current"
+                                                className="h-5 w-5"
                                                 fill="none"
                                                 viewBox="0 0 24 24"
                                                 stroke="currentColor"
@@ -212,12 +212,12 @@ const ShowGame: React.FC<ShowGameProps> = ({ game }) => {
                                 </div>
                             );
                         })}
-                        {game.images.length === null && (
-                            <h3 className="text-center text-lg text-gray-500">
-                                No screenshots available for the moment
-                            </h3>
-                        )}
                     </div>
+                    {game.images.length === 0 && (
+                        <h3 className="text-center text-lg text-gray-500">
+                            No screenshots available for the moment
+                        </h3>
+                    )}
                 </div>
                 {/* END IMAGE GAME SECTION */}
                 <div className="pb-12 mt-8">
@@ -268,8 +268,8 @@ export const getStaticPaths = async (): Promise<GetStaticPathsResult<any>> => {
     const slugs = await getGamesSlug();
 
     return {
-        fallback: true,
         paths: slugs,
+        fallback: 'blocking',
     };
 };
 export default ShowGame;

@@ -24,14 +24,16 @@ const RatingProgress: React.FC<RatingProgressProps> = ({ slug, style, rating, ca
                 easing: 'easeOut',
                 from: { color: '#48bb78' },
                 to: { color: '#48bb78' },
-                step: function (state, circle, attachment) {
+                step: function (state, circle) {
                     if (circle.path) {
                         circle.path.setAttribute('stroke', state.color);
                         circle.path.setAttribute('stroke-width', '6');
                         var value = Math.round(circle.value() * 100);
                         if (value === 0) {
+                            //@ts-ignore
                             circle.setText('N/A');
                         } else {
+                            //@ts-ignore
                             circle.setText(value + '%');
                         }
                     }

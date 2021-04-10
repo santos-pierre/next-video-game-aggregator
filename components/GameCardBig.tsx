@@ -10,7 +10,12 @@ const GameCardBig: React.FC<GameCardBigProps> = ({ game }) => {
     return (
         <div className="mt-8">
             <div className="relative inline-block">
-                <Link href="/">
+                <Link
+                    href={{
+                        pathname: '/games/[slug]',
+                        query: { slug: game.slug },
+                    }}
+                >
                     <a>
                         <img
                             src={game.cover}
@@ -28,7 +33,12 @@ const GameCardBig: React.FC<GameCardBigProps> = ({ game }) => {
                     </a>
                 </Link>
             </div>
-            <Link href="/">
+            <Link
+                href={{
+                    pathname: '/games/[slug]',
+                    query: { slug: game.slug },
+                }}
+            >
                 <a className="block text-base font-bold leading-tight hover:text-gray-400 mt-8">
                     {game.name}
                 </a>
