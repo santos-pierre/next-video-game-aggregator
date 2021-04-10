@@ -1,7 +1,5 @@
 import axios from 'axios';
 import { GetStaticPropsResult } from 'next';
-import AnticipatedGames from '../components/AnticipatedGames';
-import ComingSoonGames from '../components/ComingSoonGames';
 import Layout from '../components/Layout';
 import PopularGames from '../components/PopularGames';
 import ReviewedGames from '../components/ReviewedGames';

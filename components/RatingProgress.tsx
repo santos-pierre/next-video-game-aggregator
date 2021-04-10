@@ -30,7 +30,7 @@ const RatingProgress: React.FC<RatingProgressProps> = ({ slug, style, rating, ca
                         circle.path.setAttribute('stroke-width', '6');
                         var value = Math.round(circle.value() * 100);
                         if (value === 0) {
-                            circle.setText('0%');
+                            circle.setText('N/A');
                         } else {
                             circle.setText(value + '%');
                         }

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { collect } from 'collect.js';
 import dayjs from 'dayjs';
 import LRU from 'lru-cache';
 
@@ -77,4 +78,47 @@ export const getGames = async (filter?: 'popular' | 'reviewed' | 'anticipated' |
     } catch (error) {
         return Promise.reject(error);
     }
+};
+
+export const getGame = async (slug: string) => {
+    let query = `fields slug, name, storyline, summary, websites.url, videos.video_id,involved_companies.company.name, rating, platforms.abbreviation, genres.name,
+    screenshots.url, cover.url, aggregated_rating,
+    similar_games.name, similar_games.platforms.name, similar_games.cover.url, similar_games.slug, similar_games.rating;
+    where slug=\"${slug}\";`;
+
+    try {
+        if (!cache.get('igdb_access_token')) {
+            const { access_token, expires_in } = (await getIDGBAccessToken()).data;
+            cache.set('igdb_access_token', access_token, expires_in);
+        }
+
+        const response = await axios({
+            method: 'POST',
+            url: 'https://api.igdb.com/v4/games',
+            headers: {
+                Authorization: `Bearer ${cache.get('igdb_access_token')}`,
+                'Client-ID': process.env.IGDB_CLIENT_ID!,
+                'Content-Type': 'application/json',
+            },
+            data: query,
+        });
+
+        return Promise.resolve(response.data.shift());
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+export const getGamesSlug = async () => {
+    let allSlugs = collect()
+        .concat(collect(await getGames('reviewed')).pluck('slug'))
+        .concat(collect(await getGames('anticipated')).pluck('slug'))
+        .concat(collect(await getGames('coming_soon')).pluck('slug'))
+        .concat(collect(await getGames('popular')).pluck('slug'));
+
+    let formattedSlugs = allSlugs.map((item: any) => {
+        return { params: { slug: item } };
+    });
+
+    return formattedSlugs.all();
 };
