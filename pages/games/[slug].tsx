@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { GetStaticPathsResult, GetStaticProps, GetStaticPropsResult } from 'next';
+import { useRouter } from 'next/router';
 import GameCardBig from '../../components/GameCardBig';
 import Layout from '../../components/Layout';
 import RatingProgress from '../../components/RatingProgress';
@@ -12,6 +13,85 @@ type ShowGameProps = {
 };
 
 const ShowGame: React.FC<ShowGameProps> = ({ game }) => {
+    const router = useRouter();
+
+    if (router.isFallback) {
+        return (
+            <Layout>
+                <div className="container mx-auto px-4 mt-8">
+                    <div className="game-details border-b border-gray-800 pb-12 flex flex-col lg:flex-row animate-pulse">
+                        <div className="flex-none">
+                            <div className="h-64 w-56 bg-gray-800 rounded"> </div>
+                        </div>
+                        <div className="ml-0 lg:ml-12 lg:mr-64 mr-0">
+                            <h2 className="text-transparent rounded bg-gray-800">
+                                The magnificent name of that game
+                            </h2>
+                            <div className="text-transparent mt-3">
+                                <span className="rounded bg-gray-800">My genres</span>·
+                                <span className="rounded bg-gray-800">My awesome company</span>·
+                                <span className="rounded bg-gray-800">My awesome platforms</span>
+                            </div>
+                            <div className="flex flex-wrap items-center mt-8">
+                                <div className="flex items-center">
+                                    <div className="h-16 w-16 bg-gray-800 rounded-full" />
+                                </div>
+                                <div className="flex items-center ml-12">
+                                    <div className="h-16 w-16 bg-gray-800 rounded-full" />
+                                </div>
+                                <div className="flex items-center space-x-4 mt-6 lg:mt-0 lg:ml-12 ml-0">
+                                    <div className="rounded-full bg-gray-800 w-8 h-8" />
+                                    <div className="rounded-full bg-gray-800 w-8 h-8" />
+                                    <div className="rounded-full bg-gray-800 w-8 h-8" />
+                                    <div className="rounded-full bg-gray-800 w-8 h-8" />
+                                </div>
+                                <div className="flex flex-col">
+                                    <p className="lg:mt-12 mt-4 rounded bg-gray-800 text-transparent">
+                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quod nobis
+                                        vel odit eligendi voluptatibus consequatur quaerat quasi aut
+                                        repellendu
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="border-b border-gray-800 pb-12 mt-8 animate-pulse">
+                        <SectionTitle>Images</SectionTitle>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mt-8">
+                            {Array(9).map((_element, index) => {
+                                return (
+                                    <div key={`${index}-images`}>
+                                        <div className="w-64 h-44 rounded bg-gray-800"> </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                    <div className="pb-12 mt-8">
+                        <SectionTitle>Similar Games</SectionTitle>
+                        <div className="similar-game text-sm grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 gap-12 pb-16">
+                            {Array(6).map((_element, index) => {
+                                return (
+                                    <div className="mt-8 animate-pulse" key={`${index}-games`}>
+                                        <div className="inline-block relative">
+                                            <div className="h-64 w-44 bg-gray-800 rounded " />
+                                        </div>
+                                        <div className="block text-lg bg-gray-800 text-transparent leading-tight mt-4 rounded">
+                                            My amazing title
+                                        </div>
+                                        <div className="inline-block bg-gray-800 text-transparent rounded mt-1">
+                                            my platforms
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
+            </Layout>
+        );
+    }
+
     return (
         <Layout>
             <div className="container mx-auto px-4 mt-8">
@@ -269,7 +349,7 @@ export const getStaticPaths = async (): Promise<GetStaticPathsResult<any>> => {
 
     return {
         paths: slugs,
-        fallback: 'blocking',
+        fallback: true,
     };
 };
 export default ShowGame;
