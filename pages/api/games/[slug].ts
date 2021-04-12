@@ -16,7 +16,7 @@ export default async ({ query }: NextApiRequest, res: NextApiResponse) => {
 
 const formatToView = (game: DetailedGame) => {
     return collect(game).merge({
-        cover: game.cover.url ? game.cover.url.replace('thumb', 'cover_big') : '/img/cover_big.png',
+        cover: game.cover ? game.cover.url.replace('thumb', 'cover_big') : '/img/cover_big.png',
         genres: game.genres ? collect(game.genres).pluck('name').implode(', ') : 'Undefined Genres',
         involved_companies: game.involved_companies
             ? collect(game.involved_companies).pluck('company.name').implode(', ')

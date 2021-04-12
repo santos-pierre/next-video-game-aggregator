@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
+import SearchInput from './SearchInput';
 
 type Props = {
     children?: ReactNode;
@@ -41,28 +42,7 @@ const Layout = ({ children, title = 'Santos Pierre | Games' }: Props) => (
                     </div>
                     <div className="flex items-center">
                         <div className="ml-6">
-                            <div className="flex flex-col">
-                                <div className="relative">
-                                    <input
-                                        type="text"
-                                        className="w-64 px-3 py-1 pl-8 text-sm bg-gray-800 rounded-full focus:outline-none focus:shadow-outline"
-                                        placeholder="Search ..."
-                                    />
-                                    <div className="absolute top-0 flex items-center h-full ml-2">
-                                        <svg
-                                            className="w-4 text-gray-400"
-                                            fill="none"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                        >
-                                            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
+                            <SearchInput />
                         </div>
                     </div>
                 </nav>
