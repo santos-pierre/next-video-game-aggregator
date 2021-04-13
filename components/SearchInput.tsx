@@ -18,7 +18,8 @@ const SearchInput: React.FC = () => {
             setTimeout(async () => {
                 if (e.target.value) {
                     try {
-                        let data = (await axios.get(`api/games/search/${e.target.value}`)).data;
+                        let data = (await axios.get(`/api/games/search/${e.target.value}`)).data;
+
                         setResults(data);
                     } catch (error) {
                         console.log(error);
@@ -62,9 +63,9 @@ const SearchInput: React.FC = () => {
                                 pathname: '/games/[slug]',
                                 query: { slug: game.slug },
                             }}
+                            key={`${game.slug}-result-element`}
                         >
                             <a
-                                key={`${game.slug}-result-element`}
                                 className="block transition duration-150 ease-in-out hover:bg-blue-900 focus:outline-none focus:bg-gray-50"
                                 onClick={handleClick}
                             >

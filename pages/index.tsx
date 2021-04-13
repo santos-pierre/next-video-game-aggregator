@@ -1,10 +1,10 @@
-import axios from 'axios';
 import { GetStaticPropsResult } from 'next';
 import Layout from '../components/Layout';
 import PopularGames from '../components/PopularGames';
 import ReviewedGames from '../components/ReviewedGames';
 import SideSectionGames from '../components/SideSectionGames';
 import { Game } from '../interfaces';
+import { formatGameToView, formatToView, getGame, getGames } from '../utils';
 
 type IndexPageProps = {
     popularGames: Game[];
@@ -38,16 +38,16 @@ const IndexPage: React.FC<IndexPageProps> = ({
 };
 
 export const getStaticProps = async (): Promise<GetStaticPropsResult<any>> => {
-    let popularGames = [];
-    let reviewedGames = [];
-    let comingSoonGames = [];
-    let anticipatedGames = [];
+    let popularGames: Game[] = [];
+    let reviewedGames: Game[] = [];
+    let comingSoonGames: Game[] = [];
+    let anticipatedGames: Game[] = [];
 
     try {
-        popularGames = (await axios.get('http://localhost:3000/api/games/filter/popular')).data;
-        reviewedGames = (await axios.get('http://localhost:3000/api/games/filter/reviewed')).data;
-        comingSoonGames = (await axios.get('http://localhost:3000/api/games/filter/coming_soon')).data;
-        anticipatedGames = (await axios.get('http://localhost:3000/api/games/filter/anticipated')).data;
+        popularGames = formatToView((await getGames('popular')).data, 'big');
+        reviewedGames = formatToView((await getGames('reviewed')).data, 'big');
+        comingSoonGames = formatToView((await getGames('coming_soon')).data, 'thumb');
+        anticipatedGames = formatToView((await getGames('anticipated')).data, 'thumb');
     } catch (error) {
         console.log(error);
     }

@@ -6,7 +6,7 @@ import Layout from '../../components/Layout';
 import RatingProgress from '../../components/RatingProgress';
 import SectionTitle from '../../components/SectionTitle';
 import { DetailedGame, Screenshots } from '../../interfaces';
-import { getGamesSlug } from '../../utils';
+import { formatGameToView, getGame, getGamesSlug } from '../../utils';
 
 type ShowGameProps = {
     game: DetailedGame;
@@ -322,7 +322,7 @@ const ShowGame: React.FC<ShowGameProps> = ({ game }) => {
 export const getStaticProps: GetStaticProps = async ({ params }): Promise<GetStaticPropsResult<any>> => {
     if (params) {
         try {
-            const game = (await axios.get(`http://localhost:3000/api/games/${params.slug}`)).data;
+            const game = formatGameToView((await getGame(params.slug as string)).data.shift());
 
             if (!game) {
                 return {
