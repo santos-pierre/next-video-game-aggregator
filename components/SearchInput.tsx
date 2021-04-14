@@ -1,13 +1,15 @@
 import axios from 'axios';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import Link from 'next/link';
 import dayjs from 'dayjs';
+import Image from 'next/image';
 
 const SearchInput: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [results, setResults] = useState<any[]>([]);
     const [lazy, setLazy] = useState<any>(0);
     const [search, setSearch] = useState('');
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const handleSearch = async (e: ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value);
@@ -22,11 +24,10 @@ const SearchInput: React.FC = () => {
 
                         setResults(data);
                     } catch (error) {
-                        console.log(error);
+                        setResults([]);
                     } finally {
                         setIsLoading(false);
                         clearTimeout(lazy);
-                        console.log('Stop Typing!');
                     }
                 }
             }, 1000)
@@ -34,6 +35,7 @@ const SearchInput: React.FC = () => {
     };
 
     const handleClick = () => {
+        if (inputRef && inputRef.current) inputRef.current.value = '';
         setSearch('');
         setIsLoading(false);
         clearTimeout(lazy);
@@ -72,14 +74,18 @@ const SearchInput: React.FC = () => {
                                 <div className="flex items-center">
                                     <div className="flex items-center flex-1 min-w-0">
                                         <div className="flex-shrink-0 p-2">
-                                            <img
-                                                className="w-10"
+                                            <Image
                                                 src={
                                                     game.cover
-                                                        ? game.cover.url.replace('thumb', 'cover_big')
+                                                        ? `https:${game.cover.url.replace(
+                                                              'thumb',
+                                                              'cover_big'
+                                                          )}`
                                                         : '/img/cover_big.png'
                                                 }
                                                 alt={`${game.name}-cover-search`}
+                                                width="50px"
+                                                height="75px"
                                             />
                                         </div>
                                         <div>
@@ -108,12 +114,13 @@ const SearchInput: React.FC = () => {
 
     return (
         <div className="flex flex-col">
-            <div className="relative">
+            <div className="relative z-20">
                 <input
                     type="text"
                     className="w-64 px-3 py-1 pl-8 text-sm bg-gray-800 rounded-full focus:outline-none focus:shadow-outline"
                     placeholder="Search Game"
                     onChange={handleSearch}
+                    ref={inputRef}
                 />
                 <div className="absolute top-0 flex items-center h-full ml-2">
                     <svg
@@ -130,12 +137,19 @@ const SearchInput: React.FC = () => {
                 </div>
             </div>
             {search && (
-                <div
-                    className="absolute z-50 w-64 h-64 mt-10 overflow-scroll overflow-x-hidden bg-gray-800 border border-blue-500 rounded-sm"
-                    style={{ scrollbarWidth: 'none' }}
-                >
-                    {displayResult()}
-                </div>
+                <>
+                    <div
+                        className="absolute z-50 w-64 h-64 mt-10 overflow-scroll overflow-x-hidden bg-gray-800 border border-blue-500 rounded-sm"
+                        style={{ scrollbarWidth: 'none' }}
+                    >
+                        {displayResult()}
+                    </div>
+                    <div
+                        className="fixed z-10 inset-0 bg-gray-500 bg-opacity-50 transition-opacity"
+                        aria-hidden="true"
+                        onClick={handleClick}
+                    ></div>
+                </>
             )}
         </div>
     );

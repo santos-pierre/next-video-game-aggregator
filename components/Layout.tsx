@@ -2,7 +2,9 @@ import React, { ReactNode } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
-import SearchInput from './SearchInput';
+import dynamic from 'next/dynamic';
+
+const SearchInput = dynamic(() => import('./SearchInput'));
 
 type Props = {
     children?: ReactNode;

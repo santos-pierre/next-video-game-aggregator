@@ -14,6 +14,7 @@ const PopularGames: React.FC<PopularGamesProps> = ({ games }) => {
                 {games.map((game) => {
                     return <GameCardBig game={game} key={game.slug} />;
                 })}
+                {games.length === 0 && <h3 className="text-center text-lg text-gray-500">Games not found</h3>}
             </div>
         </>
     );

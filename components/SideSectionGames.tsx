@@ -16,6 +16,7 @@ const SideSectionGames: React.FC<SideSectionGamesProps> = ({ games, title, categ
                 {games.map((game) => {
                     return <GameCardSmall game={game} key={`${game.slug}-${category}`} />;
                 })}
+                {games.length === 0 && <h3 className="text-center text-lg text-gray-500">Games not found</h3>}
             </div>
         </div>
     );

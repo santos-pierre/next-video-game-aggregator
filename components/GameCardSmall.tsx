@@ -1,5 +1,6 @@
 import { Game } from '../interfaces';
 import Link from 'next/link';
+import Image from 'next/image';
 
 type GameCardSmallProps = {
     game: Game;
@@ -14,12 +15,8 @@ const GameCardSmall: React.FC<GameCardSmallProps> = ({ game }) => {
                     query: { slug: game.slug },
                 }}
             >
-                <a>
-                    <img
-                        src={game.cover}
-                        alt="game cover"
-                        className="w-16 hover:opacity-75 transition ease-in-out duration-150"
-                    />
+                <a className="w-16 hover:opacity-75 transition ease-in-out duration-150">
+                    <Image src={game.cover} alt={`${game.name}-cover`} width="50px" height="75px" />
                 </a>
             </Link>
             <div className="ml-4">

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Game } from '../interfaces';
 import RatingProgress from './RatingProgress';
 
@@ -17,11 +18,12 @@ const ReviewedGameCard: React.FC<ReviewedGameCardProps> = ({ game }) => {
                             query: { slug: game.slug },
                         }}
                     >
-                        <a>
-                            <img
+                        <a className="w-24 transition duration-150 ease-in-out lg:w-48 hover:opacity-75">
+                            <Image
                                 src={game.cover}
-                                alt="game cover"
-                                className="w-24 transition duration-150 ease-in-out lg:w-48 hover:opacity-75"
+                                alt={`${game.name}-reviewed-cover`}
+                                width="200px"
+                                height="300px"
                             />
                         </a>
                     </Link>

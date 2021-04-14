@@ -4,7 +4,7 @@ import PopularGames from '../components/PopularGames';
 import ReviewedGames from '../components/ReviewedGames';
 import SideSectionGames from '../components/SideSectionGames';
 import { Game } from '../interfaces';
-import { formatGameToView, formatToView, getGame, getGames } from '../utils';
+import { formatToView, getGames } from '../utils';
 
 type IndexPageProps = {
     popularGames: Game[];

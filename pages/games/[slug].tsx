@@ -1,12 +1,12 @@
-import axios from 'axios';
 import { GetStaticPathsResult, GetStaticProps, GetStaticPropsResult } from 'next';
 import { useRouter } from 'next/router';
 import GameCardBig from '../../components/GameCardBig';
-import Layout from '../../components/Layout';
 import RatingProgress from '../../components/RatingProgress';
 import SectionTitle from '../../components/SectionTitle';
+import Layout from '../../components/Layout';
 import { DetailedGame, Screenshots } from '../../interfaces';
 import { formatGameToView, getGame, getGamesSlug } from '../../utils';
+import Image from 'next/image';
 
 type ShowGameProps = {
     game: DetailedGame;
@@ -279,19 +279,25 @@ const ShowGame: React.FC<ShowGameProps> = ({ game }) => {
                 <div className="image-container border-b border-gray-800 pb-12 mt-8">
                     <SectionTitle>Images </SectionTitle>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mt-8">
-                        {game.images.map((screenshot: Screenshots, index) => {
-                            return (
-                                <div key={`images-${game.slug}-${index}`}>
-                                    <a href={screenshot.screenshot_huge} target="_blank">
-                                        <img
-                                            src={screenshot.screenshot_big}
-                                            alt="game cover"
+                        {game.images &&
+                            game.images.map((screenshot: Screenshots, index) => {
+                                return (
+                                    <div key={`images-${game.slug}-${index}`}>
+                                        <a
+                                            href={screenshot.screenshot_huge}
+                                            target="_blank"
                                             className="hover:opacity-75 transition ease-in-out duration-150"
-                                        />
-                                    </a>
-                                </div>
-                            );
-                        })}
+                                        >
+                                            <Image
+                                                src={screenshot.screenshot_big}
+                                                alt={`${game.name}-reviewed-cover`}
+                                                width="500px"
+                                                height="300px"
+                                            />
+                                        </a>
+                                    </div>
+                                );
+                            })}
                     </div>
                     {game.images.length === 0 && (
                         <h3 className="text-center text-lg text-gray-500">
@@ -304,9 +310,10 @@ const ShowGame: React.FC<ShowGameProps> = ({ game }) => {
                     {/* START SIMILAR GAME */}
                     <SectionTitle>Similar Games</SectionTitle>
                     <section className="text-sm grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 gap-12 pb-16">
-                        {game.similar_games.map((game) => {
-                            return <GameCardBig game={game} key={`similar-${game.slug}`} />;
-                        })}
+                        {game.similar_games &&
+                            game.similar_games.map((similar) => {
+                                return <GameCardBig game={similar} key={`similar-${similar.slug}`} />;
+                            })}
                     </section>
 
                     {game.similar_games === null && (
