@@ -7,6 +7,8 @@ import Layout from '../../components/Layout';
 import { DetailedGame, Screenshots } from '../../interfaces';
 import { formatGameToView, getGame, getGamesSlug } from '../../utils';
 import Image from 'next/image';
+import Modal from '../../components/Modal';
+import { useState } from 'react';
 
 type ShowGameProps = {
     game: DetailedGame;
@@ -14,6 +16,7 @@ type ShowGameProps = {
 
 const ShowGame: React.FC<ShowGameProps> = ({ game }) => {
     const router = useRouter();
+    const [show, setShow] = useState<boolean>(false);
 
     if (router.isFallback) {
         return (
@@ -260,7 +263,10 @@ const ShowGame: React.FC<ShowGameProps> = ({ game }) => {
                                 <p className="lg:mt-12 mt-4">{game.summary}</p>
                                 {game.trailer && (
                                     <div className="mt-12">
-                                        <button className="flex font-bold bg-blue-500 text-white px-4 py-4 hover:bg-blue-600 rounded transition ease-in-out duration-150">
+                                        <button
+                                            className="flex font-bold bg-blue-500 text-white px-4 py-4 hover:bg-blue-600 rounded transition ease-in-out duration-150"
+                                            onClick={() => setShow(true)}
+                                        >
                                             <svg className="w-6 fill-current" viewBox="0 0 24 24">
                                                 <path d="M0 0h24v24H0z" fill="none"></path>
                                                 <path d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
@@ -322,6 +328,15 @@ const ShowGame: React.FC<ShowGameProps> = ({ game }) => {
                     {/* END SIMILAR GAME */}
                 </div>
             </div>
+            <Modal show={show} onClose={() => setShow(false)}>
+                <iframe
+                    src={game.trailer}
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    width="560"
+                    height="315"
+                ></iframe>
+            </Modal>
         </Layout>
     );
 };
