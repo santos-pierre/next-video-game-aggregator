@@ -59,6 +59,7 @@ export const getStaticProps = async (): Promise<GetStaticPropsResult<any>> => {
             comingSoonGames,
             anticipatedGames,
         },
+        revalidate: 60 * 60 * 24,
     };
 };
 

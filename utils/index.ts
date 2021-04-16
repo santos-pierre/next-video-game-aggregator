@@ -166,7 +166,7 @@ export const formatToView = (unformattedGames: Game[], imgSize: 'big' | 'thumb')
                         ? collect(game.platforms).pluck('abbreviation').implode(', ')
                         : 'N/A',
                     rating: game.rating ? Math.round(game.rating) / 100 : null,
-                    cover: game.cover.url
+                    cover: game.cover
                         ? imgSize === 'big'
                             ? `https://${game.cover.url.replace('thumb', 'cover_big')}`
                             : `https://${game.cover.url}`

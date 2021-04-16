@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { createPortal } from 'react-dom';
-import { CheckIcon, XIcon } from '@heroicons/react/outline';
+import { XIcon } from '@heroicons/react/outline';
 
 type ModalProps = {
     show: boolean;
@@ -58,7 +58,7 @@ const Modal: React.FC<ModalProps> = ({ show, onClose: handleVisibility, children
                                     {children}
                                     <button
                                         type="button"
-                                        className="fixed -top-6 -right-6 inline-flex justify-center rounded-md border border-transparent text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
+                                        className="absolute -top-6 -right-6 inline-flex justify-center rounded-md border border-transparent text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
                                         onClick={() => handleVisibility(false)}
                                     >
                                         <XIcon className="w-6" />
