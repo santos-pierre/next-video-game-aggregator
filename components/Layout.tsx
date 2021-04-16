@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
@@ -8,17 +7,10 @@ const SearchInput = dynamic(() => import('./SearchInput'));
 
 type Props = {
     children?: ReactNode;
-    title?: string;
 };
 
-const Layout = ({ children, title = 'Santos Pierre | Games' }: Props) => (
+const Layout = ({ children }: Props) => (
     <>
-        <Head>
-            <title>{title}</title>
-            <meta charSet="utf-8" />
-            <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-            <link rel="icon" href="/img/logo.png" />
-        </Head>
         <div className="min-h-screen bg-gray-900 text-white font-semibold">
             <header className="border-b border-gray-800">
                 <nav className="container mx-auto flex lg:flex-row flex-col items-center justify-between px-4 py-6">

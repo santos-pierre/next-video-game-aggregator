@@ -2,6 +2,7 @@ import { GetStaticPropsResult } from 'next';
 import Layout from '../components/Layout';
 import PopularGames from '../components/PopularGames';
 import ReviewedGames from '../components/ReviewedGames';
+import SEO from '../components/SEO';
 import SideSectionGames from '../components/SideSectionGames';
 import { Game } from '../interfaces';
 import { formatToView, getGames } from '../utils';
@@ -21,6 +22,7 @@ const IndexPage: React.FC<IndexPageProps> = ({
 }) => {
     return (
         <Layout>
+            <SEO />
             <PopularGames games={popularGames} />
             <div className="flex lg:flex-row flex-col my-10">
                 <ReviewedGames games={reviewedGames} />

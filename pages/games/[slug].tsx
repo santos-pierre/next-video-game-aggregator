@@ -1,15 +1,16 @@
+import { useState } from 'react';
 import { GetStaticPathsResult, GetStaticProps, GetStaticPropsResult } from 'next';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
+import Modal from '../../components/Modal';
 import GameCardBig from '../../components/GameCardBig';
 import RatingProgress from '../../components/RatingProgress';
 import SectionTitle from '../../components/SectionTitle';
 import Layout from '../../components/Layout';
 import { DetailedGame, Screenshots } from '../../interfaces';
 import { formatGameToView, getGame, getGamesSlug } from '../../utils';
-import Image from 'next/image';
-import Modal from '../../components/Modal';
-import { useState } from 'react';
 import TrailerButton from '../../components/Game/TrailerButton';
+import SEO from '../../components/SEO';
 
 type ShowGameProps = {
     game: DetailedGame;
@@ -98,6 +99,7 @@ const ShowGame: React.FC<ShowGameProps> = ({ game }) => {
 
     return (
         <Layout>
+            <SEO game={game} />
             <div className="container mx-auto px-4 mt-8">
                 {/* START GAME DETAILS */}
                 <div className="border-b border-gray-800 pb-12 flex flex-col lg:flex-row">
