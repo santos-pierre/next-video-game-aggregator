@@ -168,8 +168,8 @@ export const formatToView = (unformattedGames: Game[], imgSize: 'big' | 'thumb')
                     rating: game.rating ? Math.round(game.rating) / 100 : null,
                     cover: game.cover
                         ? imgSize === 'big'
-                            ? `https://${game.cover.url.replace('thumb', 'cover_big')}`
-                            : `https://${game.cover.url}`
+                            ? `${game.cover.url.replace('thumb', 'cover_big')}`
+                            : `${game.cover.url}`
                         : '/img/cover_big.png',
                 })
                 .all();
@@ -193,8 +193,8 @@ export const formatGameToView = (game: DetailedGame) => {
                 ? collect(game.screenshots)
                       .map((screenshot: CoverImageGame) => {
                           return {
-                              screenshot_huge: `https://${screenshot.url.replace('thumb', '1080p')}`,
-                              screenshot_big: `https://${screenshot.url.replace('thumb', 'screenshot_big')}`,
+                              screenshot_huge: `${screenshot.url.replace('thumb', '1080p')}`,
+                              screenshot_big: `${screenshot.url.replace('thumb', 'screenshot_big')}`,
                           };
                       })
                       .take(9)
@@ -213,7 +213,7 @@ export const formatGameToView = (game: DetailedGame) => {
                                   : 'N/A',
                               rating: similar_game.rating ? Math.round(similar_game.rating) / 100 : null,
                               cover: similar_game.cover
-                                  ? `https://${similar_game.cover.url.replace('thumb', 'cover_big')}`
+                                  ? `${similar_game.cover.url.replace('thumb', 'cover_big')}`
                                   : '/img/cover_big.png',
                               slug: similar_game.slug,
                           }).all();
@@ -250,4 +250,15 @@ const getSocialWebsiteUrl = (game: DetailedGame, social: string) => {
             return null;
         }
     }
+};
+
+//================== LOADER IMAGE ===============//
+
+export const myLoader = ({ src }: { src: string; width?: number; quality?: any }) => {
+    if (src.includes('images.igdb.com')) {
+        const uri = encodeURI(`https:${src}`);
+        return decodeURI(uri);
+    }
+
+    return src;
 };

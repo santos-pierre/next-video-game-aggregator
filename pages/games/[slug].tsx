@@ -8,7 +8,7 @@ import RatingProgress from '../../components/RatingProgress';
 import SectionTitle from '../../components/SectionTitle';
 import Layout from '../../components/Layout';
 import { DetailedGame, Screenshots } from '../../interfaces';
-import { formatGameToView, getGame, getGamesSlug } from '../../utils';
+import { formatGameToView, getGame, getGamesSlug, myLoader } from '../../utils';
 import TrailerButton from '../../components/Game/TrailerButton';
 import SEO from '../../components/SEO';
 
@@ -285,6 +285,7 @@ const ShowGame: React.FC<ShowGameProps> = ({ game }) => {
                                             className="hover:opacity-75 transition ease-in-out duration-150"
                                         >
                                             <Image
+                                                loader={myLoader}
                                                 src={screenshot.screenshot_big}
                                                 alt={`${game.name}-reviewed-cover`}
                                                 width="500px"

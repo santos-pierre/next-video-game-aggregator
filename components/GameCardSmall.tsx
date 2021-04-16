@@ -1,5 +1,6 @@
 import { Game } from '../interfaces';
 import Link from 'next/link';
+import { myLoader } from '../utils';
 import Image from 'next/image';
 
 type GameCardSmallProps = {
@@ -16,7 +17,13 @@ const GameCardSmall: React.FC<GameCardSmallProps> = ({ game }) => {
                 }}
             >
                 <a className="w-16 hover:opacity-75 transition ease-in-out duration-150">
-                    <Image src={game.cover} alt={`${game.name}-cover`} width="50px" height="75px" />
+                    <Image
+                        loader={myLoader}
+                        src={game.cover}
+                        alt={`${game.name}-cover`}
+                        width="50px"
+                        height="75px"
+                    />
                 </a>
             </Link>
             <div className="ml-4">

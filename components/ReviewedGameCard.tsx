@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Game } from '../interfaces';
 import RatingProgress from './RatingProgress';
+import { myLoader } from '../utils';
 
 type ReviewedGameCardProps = {
     game: Game;
@@ -20,6 +21,7 @@ const ReviewedGameCard: React.FC<ReviewedGameCardProps> = ({ game }) => {
                     >
                         <a className="w-24 transition duration-150 ease-in-out lg:w-48 hover:opacity-75">
                             <Image
+                                loader={myLoader}
                                 src={game.cover}
                                 alt={`${game.name}-reviewed-cover`}
                                 width="200px"

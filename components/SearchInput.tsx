@@ -3,6 +3,7 @@ import { ChangeEvent, useRef, useState } from 'react';
 import Link from 'next/link';
 import dayjs from 'dayjs';
 import Image from 'next/image';
+import { myLoader } from '../utils';
 
 const SearchInput: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -75,6 +76,7 @@ const SearchInput: React.FC = () => {
                                     <div className="flex items-center flex-1 min-w-0">
                                         <div className="flex-shrink-0 p-2">
                                             <Image
+                                                loader={myLoader}
                                                 src={
                                                     game.cover
                                                         ? `https:${game.cover.url.replace(

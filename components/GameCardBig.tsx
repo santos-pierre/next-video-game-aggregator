@@ -2,6 +2,7 @@ import { Game } from '../interfaces';
 import Link from 'next/link';
 import RatingProgress from './RatingProgress';
 import Image from 'next/image';
+import { myLoader } from './../utils';
 
 type GameCardBigProps = {
     game: Game;
@@ -18,7 +19,13 @@ const GameCardBig: React.FC<GameCardBigProps> = ({ game }) => {
                     }}
                 >
                     <a className="hover:opacity-75 transition ease-in-out duration-150">
-                        <Image src={game.cover} alt={`${game.name}`} width="200px" height="300px" />
+                        <Image
+                            loader={myLoader}
+                            src={game.cover}
+                            alt={`${game.name}`}
+                            width="200px"
+                            height="300px"
+                        />
                         {game.rating && (
                             <RatingProgress
                                 slug={game.slug}
